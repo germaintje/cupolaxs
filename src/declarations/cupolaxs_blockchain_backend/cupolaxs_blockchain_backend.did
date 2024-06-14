@@ -1,0 +1,41 @@
+type UserInfo = 
+ record {
+   availableLoyaltyPoints: AvailableLoyaltyPoints;
+   company: Company;
+   description: Description;
+   email: Email;
+   firstName: FirstName;
+   lastName: LastName;
+   lastUpdateDate: LastUpdateDate;
+   startLoyaltyDate: LastUpdateDate;
+ };
+type UserId = principal;
+type StartLoyaltyDate = text;
+type LastUpdateDate = text;
+type LastName = text;
+type FirstName = text;
+type Email = text;
+type Description = text;
+type Company = text;
+type CellId = nat;
+type Cell = 
+ record {
+   bookedBy: opt UserId;
+   dateEndBooking: text;
+   dateStartBooking: text;
+   id: CellId;
+   isBooked: bool;
+   price: nat;
+ };
+type AvailableLoyaltyPoints = nat;
+service : {
+  bookCell: (UserId, CellId, text) -> (bool);
+  checkCell: (CellId) -> (opt Cell) query;
+  getCellDetails: (CellId) -> (opt Cell) query;
+  getUserData: (UserId) -> (opt UserInfo) query;
+  listCells: () -> (vec Cell) query;
+  registerUser: (principal) -> (bool);
+  setUserData: (UserId, FirstName, LastName, Company, Email, Description,
+   AvailableLoyaltyPoints, LastUpdateDate, StartLoyaltyDate) -> ();
+  updateCellEndDate: (CellId, text) -> (bool);
+}
